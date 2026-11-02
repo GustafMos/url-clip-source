@@ -95,7 +95,6 @@ This is a platform limitation, not a setting.
 | Setting | Purpose |
 |---|---|
 | Maximum download height | 720p, 1080p, 1440p or 2160p. Higher means larger files and slower downloads. |
-| Browser cookies | Lets the downloader read cookies from a local browser profile for private, age-restricted or member-only videos. |
 | Media Pool bin | The bin used by **Add to Media Pool** and **Insert at playhead**. Default: `Web Clips`. |
 | Target video track | V1–V8 for **Insert at playhead**. |
 | Cache | Shows the cache size. You can open or clear the folder. |
@@ -130,7 +129,7 @@ Open the host's About dialog. If it does not identify the paid edition, install 
 
 - Update the downloader from Settings.
 - Try a different video; the owner may have disabled embedding or the video may be region-restricted.
-- For age-restricted or private videos, choose the browser profile you are signed in with under **Browser cookies**.
+- Private, member-only and age-restricted videos are not supported by this build.
 
 ### The preview says "Preview blocked by the source site"
 

@@ -36,7 +36,6 @@ const LOG_FILE = path.join(DATA_DIR, 'app.log');
 
 const DEFAULT_SETTINGS = {
     maxHeight: 1080,
-    cookiesBrowser: 'none',
     cacheDir: DEFAULT_CACHE_DIR,
     binName: 'Web Clips',
     trackIndex: 1,
@@ -44,7 +43,6 @@ const DEFAULT_SETTINGS = {
 };
 
 const ALLOWED_HEIGHTS = [720, 1080, 1440, 2160];
-const ALLOWED_BROWSERS = ['none', 'chrome', 'edge', 'firefox', 'brave', 'opera', 'vivaldi', 'chromium'];
 
 let mainWindow = null;
 let hostPromise = null;
@@ -136,7 +134,6 @@ function getSettingsSnapshot() {
 function normalizeSettings(input = {}) {
     const next = { ...settings };
     if (ALLOWED_HEIGHTS.includes(Number(input.maxHeight))) next.maxHeight = Number(input.maxHeight);
-    if (ALLOWED_BROWSERS.includes(input.cookiesBrowser)) next.cookiesBrowser = input.cookiesBrowser;
     if (typeof input.binName === 'string' && input.binName.trim()) next.binName = input.binName.trim().slice(0, 48);
     const track = Number(input.trackIndex);
     if (Number.isInteger(track) && track >= 1 && track <= 8) next.trackIndex = track;
@@ -530,14 +527,9 @@ function normalizeVideoUrl(input) {
     return { id, url: `https://www.youtube.com/watch?v=${id}` };
 }
 
-function cookieArgs() {
-    if (!settings.cookiesBrowser || settings.cookiesBrowser === 'none') return [];
-    return ['--cookies-from-browser', settings.cookiesBrowser];
-}
-
 async function loadVideoInternal(input) {
     const { id, url } = normalizeVideoUrl(input);
-    const cacheKey = `${id}|${settings.cookiesBrowser}`;
+    const cacheKey = id;
     const cached = metadataCache.get(cacheKey);
     if (cached && Date.now() - cached.time < 10 * 60 * 1000) return cached.value;
 
@@ -551,7 +543,6 @@ async function loadVideoInternal(input) {
         '--no-warnings',
         '--socket-timeout', '20',
         '--retries', '3',
-        ...cookieArgs(),
         url
     ];
 
@@ -622,7 +613,6 @@ function buildDownloadArgs(video, start, end, maxHeight, outputPath) {
         '-f', format,
         '--merge-output-format', 'mp4',
         '-o', outputPath,
-        ...cookieArgs(),
         video.url || `https://www.youtube.com/watch?v=${video.videoId}`
     ];
 }

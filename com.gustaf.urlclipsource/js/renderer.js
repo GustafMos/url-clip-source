@@ -68,7 +68,6 @@
             state.boot = boot;
             state.settings = {
                 maxHeight: 1080,
-                cookiesBrowser: 'none',
                 binName: 'Web Clips',
                 trackIndex: 1,
                 insertMode: 'playhead',
@@ -80,7 +79,7 @@
             $('appVersion').textContent = `v${boot.version || '1.0.0'}`;
         } catch (error) {
             toast(error.message || 'Could not load plugin settings.', 'error', 7000);
-            state.settings = { maxHeight: 1080, cookiesBrowser: 'none', binName: 'Web Clips', trackIndex: 1, insertMode: 'playhead' };
+            state.settings = { maxHeight: 1080, binName: 'Web Clips', trackIndex: 1, insertMode: 'playhead' };
         }
 
         updateHostStatus();
@@ -113,7 +112,7 @@
             'progressPanel', 'progressLabel', 'progressPercent', 'progressFill', 'progressDetail',
             'readyPanel', 'readyText', 'insertBtn', 'binBtn', 'libraryGrid', 'librarySub',
             'cacheSize', 'openCacheBtn', 'toastStack', 'settingsModal', 'closeSettingsBtn',
-            'maxHeightSelect', 'cookiesSelect', 'binNameInput', 'trackSelect', 'settingsCacheSize',
+            'maxHeightSelect', 'binNameInput', 'trackSelect', 'settingsCacheSize',
             'cachePath', 'settingsOpenCacheBtn', 'settingsClearCacheBtn', 'toolsState',
             'ytdlpVersion', 'ffmpegVersion', 'ffmpegState', 'updateYtDlpBtn', 'saveSettingsBtn',
             'settingsHostState', 'settingsHostInfo', 'appVersion'
@@ -1192,7 +1191,6 @@
         state.modalOpen = true;
         els.settingsModal.classList.remove('hidden');
         els.maxHeightSelect.value = String(state.settings.maxHeight || 1080);
-        els.cookiesSelect.value = state.settings.cookiesBrowser || 'none';
         els.binNameInput.value = state.settings.binName || 'Web Clips';
         els.trackSelect.value = String(state.settings.trackIndex || 1);
         els.cachePath.textContent = state.settings.cacheDir || '—';
@@ -1210,7 +1208,6 @@
     async function saveSettings() {
         const next = {
             maxHeight: Number(els.maxHeightSelect.value),
-            cookiesBrowser: els.cookiesSelect.value,
             binName: els.binNameInput.value.trim() || 'Web Clips',
             trackIndex: Number(els.trackSelect.value),
             insertMode: 'playhead'
@@ -1378,7 +1375,7 @@
             getBootData: async () => ({
                 ok: true,
                 data: {
-                    settings: { maxHeight: 1080, cookiesBrowser: 'none', binName: 'Web Clips', trackIndex: 1, cacheDir: 'Preview mode' },
+                    settings: { maxHeight: 1080, binName: 'Web Clips', trackIndex: 1, cacheDir: 'Preview mode' },
                     library: demoLibrary,
                     tools: { ytDlp: { ok: false, error: 'Preview mode' }, ffmpeg: { ok: false, error: 'Preview mode' } },
                     hostState: { connected: false, error: 'Preview mode' },
