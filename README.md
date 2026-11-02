@@ -1,6 +1,10 @@
 # URL Clip Source
 
-A workflow-integration panel that turns a web-video link into a trimmed, edit-ready clip you can drag onto the host editor's timeline.
+An open-source workflow-integration plugin for **DaVinci Resolve Studio** that turns a web-video link into a trimmed, edit-ready clip you can drag onto the timeline.
+
+> This is a DaVinci Resolve plugin, not a Premiere Pro panel. Premiere Pro uses a different panel/extension API and would need a separate integration.
+
+URL Clip Source is an independent project. It is not affiliated with or endorsed by Blackmagic Design. DaVinci Resolve is a trademark of Blackmagic Design Pty. Ltd.
 
 ## What it does
 
@@ -16,7 +20,7 @@ A workflow-integration panel that turns a web-video link into a trimmed, edit-re
 
 | Requirement | Details |
 |---|---|
-| Host | The paid edition of the host editor, version 19 or newer, with Workflow Integrations enabled |
+| Host | **DaVinci Resolve Studio 19 or newer** with Workflow Integrations enabled |
 | OS | 64-bit desktop system supported by the packaged media tools |
 | Internet | Needed to read video metadata and download clips |
 | Disk | About 130 MB for the downloaded tools plus space for cached clips |
@@ -170,7 +174,7 @@ Run `install.ps1` after changes, then restart the host.
 
 ## Legal
 
-Only download content you own or have permission to use. Downloading from a source platform may violate that platform's terms of service. This project is not affiliated with or endorsed by any source platform or host application vendor.
+Only download content you own or have permission to use. Downloading from a source platform may violate that platform's terms of service. This project is not affiliated with or endorsed by any source platform, Adobe, or Blackmagic Design. DaVinci Resolve and Premiere Pro are trademarks of their respective owners.
 
 ## Third-party software
 
