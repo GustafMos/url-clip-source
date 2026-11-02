@@ -1,0 +1,11 @@
+* text=auto
+
+# Windows launchers and scripts must keep CRLF. GitHub source archives bypass
+# the checkout conversion, and cmd.exe can fail on LF-only label scanning.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary assets
+*.png binary
+*.ico binary
+*.exe binary

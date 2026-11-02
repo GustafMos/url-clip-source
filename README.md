@@ -30,24 +30,36 @@ Workflow Integrations are available only in the paid edition. Store-distributed 
 ## Install
 
 1. Quit the host editor.
-2. From this folder, run the installer:
+2. Run the installer by double-clicking **`install.cmd`**, or from this folder in Explorer / PowerShell / Command Prompt:
 
    ```powershell
-   .\install.ps1
+   .\install.cmd
    ```
 
 3. Start the host editor and open a project.
 4. Choose **Workspace > Workflow Integrations > URL Clip Source**.
 
-The installer downloads the video downloader and media helper on first install. The host bridge module is copied from the installed host developer package.
+The installer downloads the video downloader and media helper on first install. The host bridge module is copied from the installed host developer package. The window stays open at the end so you can read the result; add `--no-pause` to suppress that.
 
-To remove it:
+### Why `install.cmd` and not `install.ps1`
+
+Windows blocks PowerShell scripts by default (`running scripts is disabled on this system`). `install.cmd` is a small launcher that starts `install.ps1` with `-ExecutionPolicy Bypass`, which applies to that single process only. Your system-wide execution policy is never changed, and no administrator shell is needed unless the plugin folder itself is not writable — in that case the launcher offers to elevate.
+
+If you would rather call PowerShell yourself, this is the equivalent:
 
 ```powershell
-.\uninstall.ps1
+powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-Add `-DeleteCache` to remove downloaded clips as well.
+### Uninstall
+
+Run **`uninstall.cmd`** (double-click or `.\uninstall.cmd`), or:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
+```
+
+Add `-DeleteCache` to remove downloaded clips and settings as well.
 
 ## Use
 
@@ -117,6 +129,20 @@ The log is at:
 
 ## Troubleshooting
 
+### `running scripts is disabled on this system`
+
+Windows blocks `.ps1` files by default. Use `install.cmd` / `uninstall.cmd` instead of calling the scripts directly, or run them with a one-time bypass:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+Do not lower the machine-wide execution policy just for this installer. If the buttons do nothing, open a Command Prompt and run `install.cmd` there to see the output.
+
+### `install.cmd` asks for administrator rights
+
+The plugin folder already exists and is not writable by your account, usually because a previous install was run elevated. Allow the elevation prompt, or right-click `install.cmd` and choose **Run as administrator**.
+
 ### Workspace > Workflow Integrations is missing
 
 The menu is part of the paid edition and is not present in the free build or in store-distributed builds that restrict workflow integrations.
@@ -170,7 +196,7 @@ com.gustaf.urlclipsource/
   WorkflowIntegration.node  copied from the host developer package
 ```
 
-Run `install.ps1` after changes, then restart the host.
+`install.cmd` and `uninstall.cmd` are only launchers for the two PowerShell scripts. Run `install.cmd` after changes, then restart the host.
 
 ## Legal
 

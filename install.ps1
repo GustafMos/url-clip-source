@@ -1,9 +1,38 @@
+<#
+.SYNOPSIS
+    Installs the URL Clip Source panel for the host editor.
+
+.DESCRIPTION
+    Copies the plugin into the host's workflow-integration folder and downloads
+    the video downloader and media helper on first install.
+
+    Windows blocks .ps1 files by default ("running scripts is disabled on this
+    system"). Start the installer through install.cmd, which runs this script
+    with a per-process execution-policy bypass, or call:
+
+        powershell -ExecutionPolicy Bypass -File .\install.ps1
+
+.PARAMETER NoRestart
+    Do not offer to restart the host editor when it is already running.
+
+.NOTES
+    Exit code 0 = installed, 1 = failed, 2 = the destination folder needs
+    administrator rights.
+#>
 param(
     [switch]$NoRestart
 )
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+# Windows PowerShell 5.1 still defaults to TLS 1.0 for the web cmdlets, which
+# the download hosts reject.
+try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+} catch {
+    # Older/newer runtimes that do not expose the enum; ignore.
+}
 
 $pluginName = 'com.gustaf.urlclipsource'
 $source = Join-Path $PSScriptRoot $pluginName
@@ -22,6 +51,18 @@ function Get-RemoteFile {
     }
 }
 
+function Test-DirectoryWritable {
+    param([string]$Path)
+    $probe = Join-Path $Path ('.urlclip-probe-' + [guid]::NewGuid().ToString('N'))
+    try {
+        New-Item -ItemType Directory -Path $probe -ErrorAction Stop | Out-Null
+        Remove-Item -Path $probe -Recurse -Force -ErrorAction Stop
+        return $true
+    } catch {
+        return $false
+    }
+}
+
 Write-Host ''
 Write-Host '  URL Clip Source' -ForegroundColor Red
 Write-Host '  ---------------' -ForegroundColor DarkGray
@@ -36,7 +77,28 @@ if (-not (Test-Path $hostExe)) {
     Write-Warning 'The host application was not found in the default location. The plugin will still be installed.'
 }
 
-New-Item -ItemType Directory -Force -Path $destRoot | Out-Null
+# The destination is usually writable by normal users, but it can end up owned
+# by an elevated install. Report that as exit code 2 so install.cmd can relaunch
+# itself with administrator rights instead of failing with a raw access error.
+$canWrite = $false
+try {
+    New-Item -ItemType Directory -Force -Path $destRoot -ErrorAction Stop | Out-Null
+    $canWrite = Test-DirectoryWritable -Path $destRoot
+} catch {
+    $canWrite = $false
+}
+
+if (-not $canWrite) {
+    Write-Host ''
+    Write-Host 'Administrator permission is required.' -ForegroundColor Yellow
+    Write-Host 'The plugin folder cannot be written by the current user:' -ForegroundColor Yellow
+    Write-Host "  $destRoot" -ForegroundColor DarkGray
+    Write-Host ''
+    Write-Host 'Right-click install.cmd and choose "Run as administrator", or run this'
+    Write-Host 'script from an elevated PowerShell window.'
+    exit 2
+}
+
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 New-Item -ItemType Directory -Force -Path $bin | Out-Null
 
@@ -116,3 +178,4 @@ if ($hostProcess) {
 }
 
 Write-Host 'Done.' -ForegroundColor Green
+exit 0
