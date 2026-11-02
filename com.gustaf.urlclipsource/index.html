@@ -9,6 +9,7 @@
 <body>
 <svg class="svg-sprite" aria-hidden="true">
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.29-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.6 13.4a4 4 0 0 0 5.7 0l2.3-2.3a4 4 0 0 0-5.7-5.7l-1.2 1.2 1.4 1.4 1.2-1.2a2 2 0 1 1 2.8 2.8l-2.3 2.3a2 2 0 0 1-2.8 0l-1.4-1.4-1.4 1.4 1.4 1.4Zm2.8-2.8a4 4 0 0 0-5.7 0l-2.3 2.3a4 4 0 0 0 5.7 5.7l1.2-1.2-1.4-1.4L9.7 17a2 2 0 1 1-2.8-2.8l2.3-2.3a2 2 0 0 1 2.8 0l1.4 1.4 1.4-1.4-1.4-1.4Z"/></symbol>
     <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 4h3.5v16H7zM13.5 4H17v16h-3.5z"/></symbol>
     <symbol id="i-step-back" viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19 5.8v12.4a1 1 0 0 1-1.53.85l-8.62-6.2a1 1 0 0 1 0-1.7l8.62-6.2A1 1 0 0 1 19 5.8Z"/></symbol>
     <symbol id="i-step-fwd" viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM5 5.8v12.4a1 1 0 0 0 1.53.85l8.62-6.2a1 1 0 0 0 0-1.7L6.53 4.95A1 1 0 0 0 5 5.8Z"/></symbol>
@@ -30,7 +31,7 @@
 <div class="app-shell">
     <header class="topbar">
         <div class="brand">
-            <div class="brand-mark"><svg><use href="#i-play"/></svg></div>
+            <div class="brand-mark"><svg><use href="#i-link"/></svg></div>
             <div>
                 <h1>URL Clip Source</h1>
                 <p>Preview. Mark. Drag.</p>
@@ -156,6 +157,10 @@
         <aside class="inspector">
             <div id="videoCard" class="video-card is-empty">
                 <div class="video-thumb">
+                    <div class="video-placeholder">
+                        <svg><use href="#i-film"/></svg>
+                        <span>No video</span>
+                    </div>
                     <img id="videoThumb" alt="" />
                     <span id="videoDurationBadge" class="thumb-badge">—</span>
                 </div>
@@ -222,12 +227,6 @@
                 </div>
             </div>
 
-            <div class="panel-section tip-section">
-                <div class="tip">
-                    <strong>How this works</strong>
-                    <p>The host editor has no API for loading a URL into its Source Viewer, so this panel is the source viewer. The prepared MP4 is a real, edit-ready file you can drag onto the timeline. The host will place it at the drop point.</p>
-                </div>
-            </div>
         </aside>
     </main>
 

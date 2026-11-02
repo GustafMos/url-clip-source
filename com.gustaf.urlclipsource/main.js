@@ -1082,9 +1082,17 @@ function createWindow() {
         minWidth: 880,
         minHeight: 640,
         useContentSize: true,
-        backgroundColor: '#0f1115',
+        backgroundColor: '#07090f',
         autoHideMenuBar: true,
         title: 'URL Clip Source',
+        ...(process.platform === 'win32' ? {
+            titleBarStyle: 'hidden',
+            titleBarOverlay: {
+                color: '#080b12',
+                symbolColor: '#cbd5e1',
+                height: 36
+            }
+        } : {}),
         webPreferences: {
             preload: path.join(APP_DIR, 'preload.js'),
             sandbox: true,

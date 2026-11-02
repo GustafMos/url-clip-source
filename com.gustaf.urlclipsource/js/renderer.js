@@ -1168,14 +1168,27 @@
     function updateHostStatus() {
         const info = state.hostState || {};
         const connected = Boolean(info.connected);
+        const standalone = !connected && (
+            !hasHostApi ||
+            /communication with host|host bridge|initialize/i.test(String(info.error || ''))
+        );
+
         els.hostPill.classList.toggle('connected', connected);
-        els.hostPill.classList.toggle('error', !connected && Boolean(info.error));
-        els.hostPillText.textContent = connected ? 'Host connected' : (hasHostApi ? 'Host unavailable' : 'Preview mode');
+        els.hostPill.classList.toggle('error', !connected && !standalone && Boolean(info.error));
+        els.hostPill.classList.toggle('standalone', standalone);
+        els.hostPillText.textContent = connected
+            ? 'Host connected'
+            : standalone
+                ? 'Standalone preview'
+                : 'Host unavailable';
 
         if (connected) {
             const timeline = info.timelineName ? `Timeline: ${info.timelineName}` : 'No timeline open';
             els.projectInfo.textContent = `${info.projectName || 'Project'} · ${timeline}`;
             els.projectInfo.title = info.playheadTimecode ? `Playhead ${info.playheadTimecode}` : '';
+        } else if (standalone) {
+            els.projectInfo.textContent = 'Preview and clip preparation work here. Timeline actions need the paid host build.';
+            els.projectInfo.title = info.error || '';
         } else {
             els.projectInfo.textContent = info.error || 'Open a project and timeline in the host editor.';
         }
@@ -1245,11 +1258,14 @@
 
     function updateSettingsHostInfo() {
         const info = state.hostState || {};
-        els.settingsHostState.textContent = info.connected ? 'Connected' : 'Offline';
-        els.settingsHostState.className = `badge ${info.connected ? 'ok' : 'err'}`;
+        const standalone = !info.connected && /communication with host|host bridge|initialize/i.test(String(info.error || ''));
+        els.settingsHostState.textContent = info.connected ? 'Connected' : standalone ? 'Standalone' : 'Offline';
+        els.settingsHostState.className = `badge ${info.connected ? 'ok' : standalone ? 'warn' : 'err'}`;
         els.settingsHostInfo.textContent = info.connected
             ? `${info.product || 'Host editor'} ${info.version || ''} · ${info.projectName || 'Project'} · ${projectFpsLabel()}`
-            : (info.error || 'Open a project in the host editor.');
+            : standalone
+                ? 'Standalone preview mode. Timeline, Media Pool and Source Viewer actions require the paid host build.'
+                : (info.error || 'Open a project in the host editor.');
     }
 
     async function updateYtDlp() {
