@@ -161,6 +161,15 @@ Open the host's About dialog. If it does not identify the paid edition, install 
 - Try a different video; the owner may have disabled embedding or the video may be region-restricted.
 - Private, member-only and age-restricted videos are not supported by this build.
 
+### "The source site did not answer in time"
+
+The panel gives the downloader 40 seconds per attempt and retries once automatically. A timeout almost always means the connection stalled, not that the link is wrong.
+
+- Press **Load video** again. A transient stall usually clears on the next try.
+- Check that a VPN, proxy or firewall is not blocking the request.
+- Update the downloader from Settings. Older builds break when the source site changes.
+- Check `%LOCALAPPDATA%\URL Clip Source\app.log`. Each failed attempt records how long it waited and the last output the downloader produced.
+
 ### The preview says "Preview blocked by the source site"
 
 The video owner disabled embedded playback. You can still use the panel's range controls, but there is no picture to preview. Open the source page to choose times, then set the handles.

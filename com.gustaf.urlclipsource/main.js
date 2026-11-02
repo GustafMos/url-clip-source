@@ -407,6 +407,7 @@ async function ensureMediaPoolItem(record) {
 function runCapture(exe, args, options = {}) {
     return new Promise((resolve, reject) => {
         const timeout = options.timeout || 20000;
+        const label = path.basename(exe);
         let stdout = '';
         let stderr = '';
         let settled = false;
@@ -417,6 +418,9 @@ function runCapture(exe, args, options = {}) {
             child = spawn(exe, args, {
                 windowsHide: true,
                 cwd: APP_DIR,
+                // stdin stays closed. With an open pipe, any prompt from the
+                // tool would block forever because nothing ever writes to it.
+                stdio: ['ignore', 'pipe', 'pipe'],
                 env: { ...process.env }
             });
         } catch (error) {
@@ -427,8 +431,9 @@ function runCapture(exe, args, options = {}) {
         timer = setTimeout(() => {
             if (settled) return;
             settled = true;
-            try { child.kill(); } catch { /* ignore */ }
-            reject(new Error(`${path.basename(exe)} timed out.`));
+            killProcessTree(child);
+            const detail = (stderr || stdout).trim().split(/\r?\n/).filter(Boolean).slice(-3).join(' ');
+            reject(new Error(`${label} timed out after ${Math.round(timeout / 1000)}s.${detail ? ` Last output: ${detail}` : ''}`));
         }, timeout);
 
         child.stdout.on('data', (chunk) => {
@@ -551,12 +556,37 @@ async function loadVideoInternal(input) {
         '--skip-download',
         '--dump-single-json',
         '--no-warnings',
-        '--socket-timeout', '20',
-        '--retries', '3',
+        '--socket-timeout', '15',
+        '--retries', '2',
         url
     ];
 
-    const run = await runCapture(YTDLP, args, { timeout: 120000 });
+    // A stalled connection can burn every socket timeout the tool allows, so
+    // give each attempt a short budget and retry once instead of waiting on a
+    // single long call. The usual cause is a transient stall, not a real error.
+    const attemptTimeout = 40000;
+    let run = null;
+    let lastError = null;
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+        try {
+            run = await runCapture(YTDLP, args, { timeout: attemptTimeout });
+            break;
+        } catch (error) {
+            lastError = error;
+            log(`Reading video information failed (attempt ${attempt}/2): ${error.message}`);
+            const timedOut = /timed out/i.test(error.message || '');
+            if (!timedOut || attempt === 2) break;
+        }
+    }
+
+    if (!run) {
+        const timedOut = /timed out/i.test((lastError && lastError.message) || '');
+        if (timedOut) {
+            throw new Error('The source site did not answer in time. Check your internet connection, then press Load video again. If it keeps happening, update the downloader in Settings.');
+        }
+        throw new Error((lastError && lastError.message) || 'Could not read that video page.');
+    }
+
     if (run.code !== 0) {
         const detail = (run.stderr || run.stdout).trim().split(/\r?\n/).filter(Boolean).slice(-4).join(' ');
         throw new Error(detail || 'Could not read that video page.');
@@ -666,6 +696,7 @@ async function downloadClip({ video, start, end, jobId }) {
     const child = spawn(YTDLP, args, {
         windowsHide: true,
         cwd: APP_DIR,
+        stdio: ['ignore', 'pipe', 'pipe'],
         env: { ...process.env }
     });
     activeJob = { jobId, child, canceled: false, tempPath };
