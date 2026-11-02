@@ -19,7 +19,14 @@ const fsp = fs.promises;
 const os = require('os');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
-const WorkflowIntegration = require('./WorkflowIntegration.node');
+
+let WorkflowIntegration = null;
+let hostBridgeError = '';
+try {
+    WorkflowIntegration = require('./WorkflowIntegration.node');
+} catch (error) {
+    hostBridgeError = error && error.message ? error.message : String(error);
+}
 
 const PLUGIN_ID = 'com.gustaf.urlclipsource';
 const APP_DIR = __dirname;
@@ -236,6 +243,9 @@ function getLibrarySnapshot() {
 /* ----------------------------------------------------------------------- */
 
 async function getHost() {
+    if (!WorkflowIntegration) {
+        throw new Error(`The host bridge is unavailable${hostBridgeError ? `: ${hostBridgeError}` : '.'}`);
+    }
     if (hostPromise) return hostPromise;
     if (!initPromise) {
         initPromise = (async () => {
@@ -1142,5 +1152,7 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
     if (activeJob) killProcessTree(activeJob.child);
-    try { WorkflowIntegration.CleanUp(); } catch { /* ignore */ }
+    if (WorkflowIntegration) {
+        try { WorkflowIntegration.CleanUp(); } catch { /* ignore */ }
+    }
 });
