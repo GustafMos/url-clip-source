@@ -62,7 +62,7 @@ if (-not (Test-Path $ffmpeg)) {
     $found = Get-ChildItem -Path $tempRoot -Recurse -Filter 'ffmpeg.exe' -File | Select-Object -First 1
     if (-not $found) { throw 'The media helper archive did not contain ffmpeg.exe.' }
     Copy-Item -Path $found.FullName -Destination $ffmpeg -Force
-    Remove-Item -Path $zip -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path $tempRoot -Recurse -Force -ErrorAction SilentlyContinue
     Write-Host '  Done.' -ForegroundColor DarkGray
 }
 
