@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BlackmagicDesign>
+    <Plugin>
+        <Id>com.gustaf.urlclipsource</Id>
+        <Name>URL Clip Source</Name>
+        <Version>1.0.0</Version>
+        <Description>Preview web videos, set In and Out points, and drag trimmed clips into the host editor.</Description>
+        <FilePath>main.js</FilePath>
+    </Plugin>
+</BlackmagicDesign>

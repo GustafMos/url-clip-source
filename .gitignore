@@ -1,0 +1,12 @@
+# Downloaded at install time
+com.gustaf.urlclipsource/bin/
+com.gustaf.urlclipsource/WorkflowIntegration.node
+
+# Build/runtime artifacts
+*.exe
+*.zip
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+node_modules/

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com https://img.youtube.com https://*.ytimg.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self' blob: file:; font-src 'self' data:; object-src 'none'; base-uri 'self';">
+    <title>URL Clip Source</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.29-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 4h3.5v16H7zM13.5 4H17v16h-3.5z"/></symbol>
+    <symbol id="i-step-back" viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19 5.8v12.4a1 1 0 0 1-1.53.85l-8.62-6.2a1 1 0 0 1 0-1.7l8.62-6.2A1 1 0 0 1 19 5.8Z"/></symbol>
+    <symbol id="i-step-fwd" viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM5 5.8v12.4a1 1 0 0 0 1.53.85l8.62-6.2a1 1 0 0 0 0-1.7L6.53 4.95A1 1 0 0 0 5 5.8Z"/></symbol>
+    <symbol id="i-mark-in" viewBox="0 0 24 24"><path d="M4 4h2v16H4zM8 12 20 4.5v15L8 12Z"/></symbol>
+    <symbol id="i-mark-out" viewBox="0 0 24 24"><path d="M18 4h2v16h-2zM16 12 4 4.5v15L16 12Z"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 3h2v8H9zM13 3h2v8h-2zM9 13h2v8H9zM13 13h2v8h-2z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H10l2 2h7.5A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm-3 6h12l-1 12H7L6 9Zm4 3v6h2v-6h-2Zm4 0v6h2v-6h-2Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m20.4 13-.1-1 .1-1 2-1.5-2-3.4-2.3.9a8 8 0 0 0-1.7-1L16 3.5h-4l-.4 2.5a8 8 0 0 0-1.7 1l-2.3-.9-2 3.4 2 1.5-.1 1 .1 1-2 1.5 2 3.4 2.3-.9a8 8 0 0 0 1.7 1l.4 2.5h4l.4-2.5a8 8 0 0 0 1.7-1l2.3.9 2-3.4-2-1.5ZM14 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M12 5a7 7 0 0 1 6.7 5h-2.1A5 5 0 1 0 17 12v2.5h5V9h-2.2A8.5 8.5 0 1 0 20.5 12h-2A6.5 6.5 0 1 1 12 5Z"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 4h7v7h-2V7.4l-9.3 9.3-1.4-1.4L16.6 6H13V4ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m9.2 18.4-5.6-5.6 1.4-1.4 4.2 4.2L19 5.6l1.4 1.4-11.2 11.4Z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m12 10.6 5.3-5.3 1.4 1.4-5.3 5.3 5.3 5.3-1.4 1.4-5.3-5.3-5.3 5.3-1.4-1.4 5.3-5.3-5.3-5.3 1.4-1.4 5.3 5.3Z"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><path d="M4 4h16v16H4V4Zm2 2v2h2V6H6Zm0 4v2h2v-2H6Zm0 4v2h2v-2H6Zm0 4h12v-2h-2v2h-2v-2h-2v2h-2v-2H6v2Zm10-8v-2h-2v2h2Zm0-4V6h-2v2h2Zm2 8v-2h-2v2h2Zm0-4V6h-2v2h2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-1 3h2v5.4l3.7 2.2-1 1.7-4.7-2.8V7Z"/></symbol>
+</svg>
+
+<div class="app-shell">
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark"><svg><use href="#i-play"/></svg></div>
+            <div>
+                <h1>URL Clip Source</h1>
+                <p>Preview. Mark. Drag.</p>
+            </div>
+        </div>
+
+        <div class="url-bar">
+            <div class="url-field">
+                <svg class="url-icon"><use href="#i-film"/></svg>
+                <input id="urlInput" type="text" spellcheck="false" autocomplete="off" placeholder="Paste a video link or video ID…" />
+                <button id="clearUrlBtn" class="mini-btn hidden" title="Clear"><svg><use href="#i-x"/></svg></button>
+            </div>
+            <button id="loadBtn" class="btn btn-primary">Load video</button>
+        </div>
+
+        <button id="settingsBtn" class="icon-btn" title="Settings"><svg><use href="#i-settings"/></svg></button>
+    </header>
+
+    <div class="status-strip">
+        <span id="hostPill" class="pill"><i class="dot"></i><span id="hostPillText">Connecting…</span></span>
+        <span id="projectInfo" class="muted">Checking the host editor…</span>
+        <span class="grow"></span>
+        <span id="fpsInfo" class="mono muted">— fps</span>
+        <button id="refreshStateBtn" class="mini-btn text-btn" title="Refresh host state"><svg><use href="#i-refresh"/></svg><span>Refresh</span></button>
+    </div>
+
+    <main class="workspace">
+        <section class="stage">
+            <div class="player-card">
+                <div id="playerMount" class="player-mount">
+                    <div id="ytHost" class="yt-host"></div>
+
+                    <div id="playerEmpty" class="player-empty">
+                        <div class="empty-graphic">
+                            <div class="empty-ring"></div>
+                            <div class="empty-play"><svg><use href="#i-play"/></svg></div>
+                        </div>
+                        <h2>Paste a link to start</h2>
+                        <p>Preview any web video here, set an In and Out point, then drag the trimmed clip straight onto your timeline.</p>
+                        <div class="empty-hints">
+                            <span><b>1</b> Load</span>
+                            <span><b>2</b> Mark I/O</span>
+                            <span><b>3</b> Drag</span>
+                        </div>
+                    </div>
+
+                    <div id="playerPoster" class="player-poster hidden">
+                        <img id="posterImg" alt="" />
+                        <div class="poster-shade"></div>
+                        <div class="poster-message">
+                            <strong id="posterTitle">Preview unavailable</strong>
+                            <span id="posterText">This video does not allow embedded playback.</span>
+                            <button id="openSourceSiteBtn" class="btn btn-ghost">Open source page <svg><use href="#i-external"/></svg></button>
+                        </div>
+                    </div>
+
+                    <div id="playerOverlay" class="player-overlay hidden">
+                        <div class="spinner"></div>
+                        <span id="playerOverlayText">Loading video…</span>
+                    </div>
+
+                    <div id="playerBadge" class="player-badge hidden">
+                        <span class="live-dot"></span> Web video preview
+                    </div>
+                </div>
+
+                <div class="transport">
+                    <div class="transport-left">
+                        <button id="stepBackBtn" class="icon-btn small" title="Step back one frame (←)"><svg><use href="#i-step-back"/></svg></button>
+                        <button id="playBtn" class="play-btn" title="Play / pause (Space)"><svg><use href="#i-play"/></svg></button>
+                        <button id="stepFwdBtn" class="icon-btn small" title="Step forward one frame (→)"><svg><use href="#i-step-fwd"/></svg></button>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTc" class="mono">00:00:00:00</span>
+                        <span class="time-sep">/</span>
+                        <span id="durationTc" class="mono muted">00:00:00:00</span>
+                    </div>
+                    <div class="transport-right">
+                        <span id="embedState" class="tiny muted">No video loaded</span>
+                        <button id="openSourceBtn" class="mini-btn text-btn hidden" title="Open the source page"><svg><use href="#i-external"/></svg><span>Source</span></button>
+                    </div>
+                </div>
+
+                <div class="range-area">
+                    <div class="range-head">
+                        <span class="range-label">SOURCE RANGE</span>
+                        <span id="rangeHint" class="tiny muted">Set an In and Out point with I and O</span>
+                    </div>
+                    <div id="rangeBar" class="range-bar" role="group" aria-label="Source range">
+                        <div class="range-track"></div>
+                        <div id="rangeFill" class="range-fill"></div>
+                        <div id="rangeTicks" class="range-ticks"></div>
+                        <div id="playhead" class="playhead"></div>
+                        <div id="inHandle" class="range-handle in" tabindex="0" role="slider" aria-label="In point"><span></span></div>
+                        <div id="outHandle" class="range-handle out" tabindex="0" role="slider" aria-label="Out point"><span></span></div>
+                    </div>
+                    <div class="range-foot">
+                        <div class="mark-readout">
+                            <span class="mark-dot in"></span>
+                            <span class="tiny muted">IN</span>
+                            <span id="inTc" class="mono">00:00:00:00</span>
+                        </div>
+                        <div class="mark-readout">
+                            <span class="mark-dot out"></span>
+                            <span class="tiny muted">OUT</span>
+                            <span id="outTc" class="mono">00:00:00:00</span>
+                        </div>
+                        <span class="grow"></span>
+                        <span id="rangeDuration" class="tiny muted">0 frames</span>
+                    </div>
+                </div>
+
+                <div class="mark-actions">
+                    <button id="setInBtn" class="btn btn-mark in" title="Set In at playhead (I)"><svg><use href="#i-mark-in"/></svg>Set In <kbd>I</kbd></button>
+                    <button id="setOutBtn" class="btn btn-mark out" title="Set Out at playhead (O)"><svg><use href="#i-mark-out"/></svg>Set Out <kbd>O</kbd></button>
+                    <button id="goInBtn" class="btn btn-quiet" title="Go to In (Shift+I)">Go to In</button>
+                    <button id="goOutBtn" class="btn btn-quiet" title="Go to Out (Shift+O)">Go to Out</button>
+                    <button id="clearMarksBtn" class="btn btn-quiet" title="Reset range to the whole video">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <aside class="inspector">
+            <div id="videoCard" class="video-card is-empty">
+                <div class="video-thumb">
+                    <img id="videoThumb" alt="" />
+                    <span id="videoDurationBadge" class="thumb-badge">—</span>
+                </div>
+                <div class="video-copy">
+                    <h2 id="videoTitle">No video loaded</h2>
+                    <p id="videoChannel" class="muted">Paste a video link above.</p>
+                    <div class="video-meta">
+                        <span id="videoResolution">—</span>
+                        <span id="videoFps">—</span>
+                        <span id="videoSourceFps">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-head">
+                    <span>Export range</span>
+                    <span id="rangeStateBadge" class="badge">Not set</span>
+                </div>
+                <div class="range-grid">
+                    <div class="range-cell">
+                        <span class="tiny muted">IN</span>
+                        <strong id="panelIn">00:00:00:00</strong>
+                    </div>
+                    <div class="range-cell">
+                        <span class="tiny muted">OUT</span>
+                        <strong id="panelOut">00:00:00:00</strong>
+                    </div>
+                    <div class="range-cell">
+                        <span class="tiny muted">DURATION</span>
+                        <strong id="panelDuration">00:00:00:00</strong>
+                    </div>
+                    <div class="range-cell">
+                        <span class="tiny muted">FRAMES</span>
+                        <strong id="panelFrames">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <button id="prepareBtn" class="btn btn-primary btn-block" disabled>
+                    <svg><use href="#i-plus"/></svg>
+                    <span>Prepare clip</span>
+                </button>
+                <button id="cancelBtn" class="btn btn-danger btn-block hidden">Cancel download</button>
+
+                <div id="progressPanel" class="progress-panel hidden">
+                    <div class="progress-head">
+                        <span id="progressLabel">Starting…</span>
+                        <span id="progressPercent" class="mono">0%</span>
+                    </div>
+                    <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+                    <div id="progressDetail" class="tiny muted"></div>
+                </div>
+
+                <div id="readyPanel" class="ready-panel hidden">
+                    <div class="ready-title"><svg><use href="#i-check"/></svg><span>Clip ready</span></div>
+                    <p id="readyText" class="tiny muted"></p>
+                    <div class="ready-actions">
+                        <button id="insertBtn" class="btn btn-primary btn-block"><svg><use href="#i-mark-in"/></svg>Insert at playhead</button>
+                        <button id="binBtn" class="btn btn-quiet btn-block"><svg><use href="#i-folder"/></svg>Add to Media Pool</button>
+                    </div>
+                    <div class="drag-tip"><svg><use href="#i-drag"/></svg><span>Or drag the clip card at the bottom onto the Edit timeline.</span></div>
+                </div>
+            </div>
+
+            <div class="panel-section tip-section">
+                <div class="tip">
+                    <strong>How this works</strong>
+                    <p>The host editor has no API for loading a URL into its Source Viewer, so this panel is the source viewer. The prepared MP4 is a real, edit-ready file you can drag onto the timeline. The host will place it at the drop point.</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <section class="library">
+        <div class="library-head">
+            <div>
+                <h2>Prepared clips</h2>
+                <span id="librarySub" class="tiny muted">Trimmed files live in your local cache.</span>
+            </div>
+            <div class="library-actions">
+                <span id="cacheSize" class="tiny muted"></span>
+                <button id="openCacheBtn" class="mini-btn text-btn"><svg><use href="#i-folder"/></svg><span>Open folder</span></button>
+            </div>
+        </div>
+        <div id="libraryGrid" class="library-grid">
+            <div class="library-empty">
+                <svg><use href="#i-film"/></svg>
+                <p>Your prepared clips will appear here.</p>
+                <span>Load a video, set a range, then press <b>Prepare clip</b>.</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <span><kbd>I</kbd> In</span>
+        <span><kbd>O</kbd> Out</span>
+        <span><kbd>Space</kbd> Play</span>
+        <span><kbd>←</kbd><kbd>→</kbd> Frame</span>
+        <span><kbd>Shift</kbd> + <kbd>←</kbd><kbd>→</kbd> Second</span>
+        <span class="grow"></span>
+        <span id="appVersion" class="tiny muted">v1.0.0</span>
+    </footer>
+</div>
+
+<div id="toastStack" class="toast-stack"></div>
+
+<div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card">
+        <div class="modal-head">
+            <div>
+                <h2 id="settingsTitle">Settings</h2>
+                <p class="tiny muted">Downloads, cache and host behaviour.</p>
+            </div>
+            <button id="closeSettingsBtn" class="icon-btn" title="Close"><svg><use href="#i-x"/></svg></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="settings-grid">
+                <label class="field">
+                    <span>Maximum download height</span>
+                    <select id="maxHeightSelect">
+                        <option value="720">720p — small and fast</option>
+                        <option value="1080">1080p — recommended</option>
+                        <option value="1440">1440p</option>
+                        <option value="2160">2160p — large files</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Browser cookies</span>
+                    <select id="cookiesSelect">
+                        <option value="none">None</option>
+                        <option value="chrome">Chrome</option>
+                        <option value="edge">Edge</option>
+                        <option value="firefox">Firefox</option>
+                        <option value="brave">Brave</option>
+                        <option value="opera">Opera</option>
+                        <option value="vivaldi">Vivaldi</option>
+                        <option value="chromium">Chromium</option>
+                    </select>
+                    <small>Needed for private, age-restricted or member-only videos.</small>
+                </label>
+
+                <label class="field">
+                    <span>Media Pool bin</span>
+                    <input id="binNameInput" type="text" maxlength="48" placeholder="Web Clips" />
+                </label>
+
+                <label class="field">
+                    <span>Target video track</span>
+                    <select id="trackSelect">
+                        <option value="1">V1</option>
+                        <option value="2">V2</option>
+                        <option value="3">V3</option>
+                        <option value="4">V4</option>
+                        <option value="5">V5</option>
+                        <option value="6">V6</option>
+                        <option value="7">V7</option>
+                        <option value="8">V8</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="settings-block">
+                <div class="settings-block-head">
+                    <span>Download cache</span>
+                    <span id="settingsCacheSize" class="tiny muted"></span>
+                </div>
+                <div class="cache-path mono" id="cachePath">—</div>
+                <div class="settings-row">
+                    <button id="settingsOpenCacheBtn" class="btn btn-quiet"><svg><use href="#i-folder"/></svg>Open folder</button>
+                    <button id="settingsClearCacheBtn" class="btn btn-danger-quiet"><svg><use href="#i-trash"/></svg>Clear cache</button>
+                </div>
+            </div>
+
+            <div class="settings-block">
+                <div class="settings-block-head"><span>Tools</span><span id="toolsState" class="tiny muted">Checking…</span></div>
+                <div class="tool-row">
+                    <div>
+                        <strong>Downloader</strong>
+                        <span id="ytdlpVersion" class="mono tiny muted">—</span>
+                    </div>
+                    <button id="updateYtDlpBtn" class="mini-btn text-btn"><svg><use href="#i-refresh"/></svg><span>Update</span></button>
+                </div>
+                <div class="tool-row">
+                    <div>
+                        <strong>Media helper</strong>
+                        <span id="ffmpegVersion" class="mono tiny muted">—</span>
+                    </div>
+                    <span id="ffmpegState" class="badge ok">Ready</span>
+                </div>
+            </div>
+
+            <div class="settings-block">
+                <div class="settings-block-head"><span>Host editor</span><span id="settingsHostState" class="badge">—</span></div>
+                <div id="settingsHostInfo" class="tiny muted">—</div>
+            </div>
+
+            <div class="settings-note">
+                <strong>About the Source Viewer</strong>
+                <p>The official host scripting API does not expose a way to open a URL in the Source Viewer or to drag items from a third-party window into the timeline. This plugin gives you the same workflow in a dedicated source panel, then hands the host a normal media file that supports native drag-and-drop.</p>
+            </div>
+        </div>
+
+        <div class="modal-foot">
+            <button id="saveSettingsBtn" class="btn btn-primary">Save settings</button>
+        </div>
+    </div>
+</div>
+
+<script src="./js/renderer.js"></script>
+</body>
+</html>

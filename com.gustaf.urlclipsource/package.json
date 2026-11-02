@@ -1,0 +1,7 @@
+{
+    "name": "url-clip-source",
+    "version": "1.0.0",
+    "description": "A workflow-integration panel that prepares trimmed web-video clips for the host editor",
+    "main": "main.js",
+    "private": true
+}
